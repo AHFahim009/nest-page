@@ -1,48 +1,23 @@
 import React, { useState } from "react";
-import {
-  BoltIcon,
-  Bars3BottomRightIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/solid";
 import { Link, NavLink } from "react-router-dom";
+import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <div className="bg-gray-100  header-container ">
-      {/* logo section */}
-      <nav className="flex justify-between items-center ">
-        <Link to="/" className="inline-flex items-center ">
-          <BoltIcon className="h-6 w-6 text-blue-500" />
-          <span className="ms-2  tracking-wide text-2xl font-bold text-gray-950 ">
-            nextpage
-          </span>
-        </Link>
+    <div className="bg-gray-100">
+      <div className=" header-container">
+        <div className="relative flex items-center justify-between">
+          {/* Logo Section */}
+          <Link to="/" className="inline-flex items-center">
+            <span className="ml-2 text-xl font-bold tracking-wide text-gray-800">
+              Website
+            </span>
+          </Link>
 
-        <ul className="items-center">
-          <section className="md:hidden  ">
-            <div onClick={() => setOpen(!open)}>
-              <span>
-                {open === true ? (
-                  <XMarkIcon
-                    className="h-6 w-6 text-blue-500"
-                    title="Close Menu"
-                  />
-                ) : (
-                  <Bars3BottomRightIcon
-                    className="h-6 w-6 text-blue-500"
-                    title="Opne Menu"
-                  />
-                )}
-              </span>
-            </div>
-          </section>
-          <section
-            className={`md:flex md:space-x-8 duration-500 absolute md:static  ${
-              open ? "-ml-44" : "-top-36"
-            }`}
-          >
-            <li className="mt-6 md:mt-0">
+          {/* Nav Items Section */}
+          <ul className="items-center hidden space-x-8 lg:flex">
+            <li>
               <NavLink
                 to="/"
                 className={({ isActive }) => (isActive ? "active" : "default")}
@@ -52,7 +27,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/book"
+                to="/books"
                 className={({ isActive }) => (isActive ? "active" : "default")}
               >
                 Books
@@ -63,13 +38,81 @@ const Header = () => {
                 to="/about"
                 className={({ isActive }) => (isActive ? "active" : "default")}
               >
-                About Us
+                About us
               </NavLink>
             </li>
-          </section>
-        </ul>
-      </nav>
-      {/* nav section */}
+          </ul>
+          <div className="hidden lg:block ">
+            <button className="btn ">option</button>
+          </div>
+          {/* Mobile Navbar Section */}
+          <div className="lg:hidden">
+            {/* Dropdown Open Button */}
+            <button
+              aria-label="Open Menu"
+              title="Open Menu"
+              onClick={() => setIsMenuOpen(true)}
+            >
+              <Bars3BottomRightIcon className="w-7 text-gray-600 " />
+            </button>
+            {isMenuOpen && (
+              <div className="absolute top-0 left-0 w-full z-10">
+                <div className="p-5 bg-white border rounded shadow-sm">
+                  {/* Logo & Button section */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <Link to="/" className="inline-flex items-center">
+                        <span className=" text-xl font-bold tracking-wide text-gray-800 uppercase">
+                          Website
+                        </span>
+                      </Link>
+                    </div>
+                    {/* Dropdown menu close button */}
+                    <div>
+                      <button
+                        aria-label="Close Menu"
+                        title="Close Menu"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <XMarkIcon className="w-7 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Mobile Nav Items Section */}
+                  <nav>
+                    <ul className="space-y-4">
+                      <li>
+                        <Link to="/" className="default">
+                          Home
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/books"
+                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-blue-400"
+                        >
+                          Books
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/about"
+                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-blue-400"
+                        >
+                          About Us
+                        </Link>
+                      </li>
+                      <li>
+                        <button className="btn"> option</button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
